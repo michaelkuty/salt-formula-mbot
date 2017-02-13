@@ -1,0 +1,10 @@
+applications:
+- mbot
+classes:
+- service.mbot.support
+parameters:
+  mbot:
+    server:
+      enabled: true
+      bind:
+        address: 0.0.0.0

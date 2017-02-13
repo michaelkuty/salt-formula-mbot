@@ -1,0 +1,33 @@
+
+{%- set source_engine = salt['pillar.get']('mbot:server:source:engine') %}
+
+{%- load_yaml as base_defaults %}
+{%- if source_engine == 'git' %}
+Debian:
+  logging:
+    level: debug
+  pkgs:
+  - python-psycopg2
+  dir:
+    config: /srv/mbot/mbot.conf
+    state: /srv/mbot/state.db
+    base: /srv/mbot
+    home: /srv/mbot
+    workspace: /srv/mbot
+RedHat:
+  pkgs:
+  - python-psycopg2
+  dir:
+    base: /srv/mbot/venv
+    home: /var/lib/mbot
+    workspace: /srv/mbot/workspace
+{%- else %}
+Debian:
+  pkgs:
+  - mbot
+  dir:
+    base: /usr/lib/mbot
+{%- endif %}
+{%- endload %}
+
+{%- set server = salt['grains.filter_by'](base_defaults, merge=salt['pillar.get']('mbot:server')) %}
