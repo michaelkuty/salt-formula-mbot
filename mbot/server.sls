@@ -32,6 +32,7 @@ mbot_dirs:
   - user: mbot
   - require:
     - pkg: mbot_packages
+    - file: mbot_dirs
 
 mbot_installation:
   pip.installed:
